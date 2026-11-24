@@ -1,0 +1,15 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Frame name="HealLaneModConfigFrame" parent="UIParent" inherits="BackdropTemplate" hidden="true" movable="true" enableMouse="true" clampedToScreen="true">
+        <Size x="780" y="520"/>
+        <Anchors>
+            <Anchor point="CENTER"/>
+        </Anchors>
+        <Scripts>
+            <OnLoad>
+                self:RegisterForDrag("LeftButton")
+                self:SetScript("OnDragStart", self.StartMoving)
+                self:SetScript("OnDragStop", self.StopMovingOrSizing)
+            </OnLoad>
+        </Scripts>
+    </Frame>
+</Ui>
