@@ -4,6 +4,7 @@
     <Include file="Lib/HealLaneModUI.xml"/>
     <Include file="UI/Config/Config.xml"/>
     <Script file="Features/AutoGossip/AutoGossip.lua"/>
+    <Script file="Features/ChatGuildIcon/ChatGuildIcon.lua"/>
     <Script file="UI/Config/Config.lua"/>
     <Include file="UI/Minimap/Minimap.xml"/>
     <Script file="UI/Minimap/Minimap.lua"/>

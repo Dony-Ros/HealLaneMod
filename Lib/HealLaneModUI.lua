@@ -2,6 +2,31 @@ local UI = HealLaneModUI or GameUtilityUI or {}
 HealLaneModUI = UI
 GameUtilityUI = UI
 
+function UI:WrapTextToWidth(fontString, width)
+    if not fontString then return end
+    fontString:SetWidth(width)
+    if fontString.SetWordWrap then fontString:SetWordWrap(true) end
+    if fontString.SetNonSpaceWrap then fontString:SetNonSpaceWrap(true) end
+    return fontString
+end
+
+function UI:ApplyPixelPerfectFontString(fontString)
+    if not fontString then
+        return fontString
+    end
+    if fontString.SetSnapToPixelGrid then
+        fontString:SetSnapToPixelGrid(true)
+    end
+    if fontString.SetTexelSnappingBias then
+        fontString:SetTexelSnappingBias(0)
+    end
+    return fontString
+end
+
+function UI:CreatePixelPerfectFontString(parent, name, layer, template)
+    return self:ApplyPixelPerfectFontString(parent:CreateFontString(name, layer, template))
+end
+
 local function ColorTexture(texture, color, alpha)
     if texture then
         texture:SetColorTexture(color[1], color[2], color[3], alpha or 1)
@@ -34,6 +59,7 @@ function UI:StyleButton(button, colors, text)
 
     local fontString = button:GetFontString()
     if fontString then
+        self:ApplyPixelPerfectFontString(fontString)
         fontString:SetFontObject(GameFontNormal)
         fontString:SetTextColor(unpack(colors.text))
     end
@@ -65,7 +91,7 @@ function UI:CreateIconButton(parent, colors, width, height, onClick)
     button.icon:SetPoint("LEFT", 5, 0)
     button.icon:SetDrawLayer("OVERLAY")
 
-    button.text = button:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    button.text = self:CreatePixelPerfectFontString(button, nil, "OVERLAY", "GameFontHighlight")
     button.text:SetPoint("LEFT", button.icon, "RIGHT", 8, 0)
     button.text:SetPoint("RIGHT", -6, 0)
     button.text:SetJustifyH("LEFT")
@@ -86,6 +112,7 @@ function UI:SetButtonSelected(button, colors, selected)
     ColorTexture(button:GetNormalTexture(), selected and colors.accentDim or colors.control)
     local fontString = button:GetFontString()
     if fontString then
+        self:ApplyPixelPerfectFontString(fontString)
         fontString:SetTextColor(unpack(selected and colors.accent or colors.text))
     end
 end
@@ -93,6 +120,7 @@ end
 function UI:SetTabSelected(button, colors, selected)
     ColorTexture(button.tabBackground, selected and colors.accentDim or colors.control)
     if button.tabText then
+        self:ApplyPixelPerfectFontString(button.tabText)
         button.tabText:SetTextColor(unpack(selected and colors.accent or colors.text))
     end
 end
@@ -104,7 +132,7 @@ function UI:CreateTabButton(parent, colors, text, width, height, onClick)
     button.tabBackground = button:CreateTexture(nil, "BACKGROUND")
     button.tabBackground:SetAllPoints()
 
-    button.tabText = button:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    button.tabText = self:CreatePixelPerfectFontString(button, nil, "OVERLAY", "GameFontNormal")
     button.tabText:SetPoint("CENTER")
     button.tabText:SetText(text or "")
 
@@ -118,7 +146,7 @@ function UI:CreateCheckbox(parent, colors, label, checked, onClick)
     checkbox:SetSize(26, 26)
     checkbox:SetChecked(checked and true or false)
 
-    local text = checkbox:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+    local text = self:CreatePixelPerfectFontString(checkbox, nil, "ARTWORK", "GameFontNormal")
     text:SetPoint("LEFT", checkbox, "RIGHT", 4, 0)
     text:SetText(label or "")
     text:SetTextColor(unpack(colors.text))
@@ -136,13 +164,16 @@ function UI:StyleCheckbox(checkbox, colors)
         local name = checkbox:GetName()
         if name then label = _G[name .. "Text"] end
     end
-    if label then label:SetTextColor(unpack(colors.text)) end
+    if label then
+        self:ApplyPixelPerfectFontString(label)
+        label:SetTextColor(unpack(colors.text))
+    end
     local checked = checkbox:GetCheckedTexture()
     if checked then checked:SetVertexColor(unpack(colors.accent)) end
 end
 
 function UI:CreateLabel(parent, colors, text, font, color)
-    local label = parent:CreateFontString(nil, "ARTWORK", font or "GameFontNormal")
+    local label = self:CreatePixelPerfectFontString(parent, nil, "ARTWORK", font or "GameFontNormal")
     label:SetText(text or "")
     label:SetTextColor(unpack(color or colors.text))
     return label
@@ -180,7 +211,10 @@ function UI:StylePanel(panel, colors, background)
 end
 
 function UI:StyleText(fontString, colors, color)
-    if fontString then fontString:SetTextColor(unpack(color or colors.text)) end
+    if fontString then
+        self:ApplyPixelPerfectFontString(fontString)
+        fontString:SetTextColor(unpack(color or colors.text))
+    end
 end
 
 function UI:StyleEditBox(editBox, colors)
@@ -237,6 +271,7 @@ function UI:CreateDropdown(parent, colors, label, options, selectedValue, onSele
 
     local valueText = button:GetFontString()
     if valueText then
+        self:ApplyPixelPerfectFontString(valueText)
         valueText:ClearAllPoints()
         valueText:SetPoint("LEFT", button, "LEFT", 10, 0)
         valueText:SetPoint("RIGHT", button, "RIGHT", -28, 0)
@@ -245,7 +280,7 @@ function UI:CreateDropdown(parent, colors, label, options, selectedValue, onSele
         valueText:SetTextColor(unpack(colors.text))
     end
 
-    local arrow = button:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    local arrow = self:CreatePixelPerfectFontString(button, nil, "OVERLAY", "GameFontHighlightSmall")
     arrow:SetPoint("RIGHT", button, "RIGHT", -10, 0)
     arrow:SetText("v")
     arrow:SetTextColor(unpack(colors.muted or colors.text))
@@ -304,6 +339,7 @@ function UI:CreateDropdown(parent, colors, label, options, selectedValue, onSele
             itemButton:SetText(item.label)
             local fontString = itemButton:GetFontString()
             if fontString then
+                self:ApplyPixelPerfectFontString(fontString)
                 local color = item.value == dropdown.selectedValue and colors.accent or colors.text
                 fontString:SetTextColor(unpack(color))
             end

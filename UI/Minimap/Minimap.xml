@@ -1,10 +1,10 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-    <Button name="HealLaneModMinimapButton" parent="Minimap" inherits="BackdropTemplate" hidden="true" enableMouse="true">
-        <Size x="34" y="34"/>
+    <Button name="HealLaneModMinimapButton" parent="Minimap" hidden="true" enableMouse="true">
+        <Size x="31" y="31"/>
         <Layers>
             <Layer level="BACKGROUND">
-                <Texture name="$parentFace" file="Interface\Buttons\WHITE8X8">
-                    <Size x="30" y="30"/>
+                <Texture name="$parentBackground" file="Interface\Minimap\UI-Minimap-Background">
+                    <Size x="24" y="24"/>
                     <Anchors>
                         <Anchor point="CENTER"/>
                     </Anchors>
@@ -12,17 +12,17 @@
             </Layer>
             <Layer level="ARTWORK">
                 <Texture name="$parentIcon" file="Interface\Icons\INV_Misc_Gear_01">
-                    <Size x="20" y="20"/>
+                    <Size x="18" y="18"/>
                     <Anchors>
-                        <Anchor point="CENTER" relativeTo="$parentFace" relativePoint="CENTER"/>
+                        <Anchor point="CENTER"/>
                     </Anchors>
                 </Texture>
             </Layer>
             <Layer level="OVERLAY">
                 <Texture name="$parentRing" file="Interface\Minimap\MiniMap-TrackingBorder">
-                    <Size x="34" y="34"/>
+                    <Size x="53" y="53"/>
                     <Anchors>
-                        <Anchor point="CENTER"/>
+                        <Anchor point="TOPLEFT"/>
                     </Anchors>
                 </Texture>
             </Layer>

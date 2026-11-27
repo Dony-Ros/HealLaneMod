@@ -1,6 +1,6 @@
 ## Interface: 16001, 20506, 50504, 120105
 ## Title: HealLaneMod
 ## Notes: Reusable addon utilities and quality-of-life features. /hlm
-## SavedVariables: HealLaneModDB, GameUtilityDB
+## SavedVariables: HealLaneModDB
 
 HealLaneMod.xml

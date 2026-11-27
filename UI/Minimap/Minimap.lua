@@ -31,16 +31,11 @@ end
 local function InitializeMinimapButton()
     local button = _G.HealLaneModMinimapButton
     local icon = _G.HealLaneModMinimapButtonIcon
-    local ring = _G.HealLaneModMinimapButtonRing
-    local face = _G.HealLaneModMinimapButtonFace
 
     button:SetFrameStrata("MEDIUM")
     button:SetFrameLevel(Minimap:GetFrameLevel() + 8)
-    face:SetMask("Interface\\CharacterFrame\\TempPortraitAlphaMask")
-    icon:SetMask("Interface\\CharacterFrame\\TempPortraitAlphaMask")
-    local colors = GU.colors
-    ring:SetVertexColor(unpack(colors.accent))
-    face:SetVertexColor(unpack(colors.control))
+    icon:SetTexCoord(0.05, 0.95, 0.05, 0.95)
+    button:SetHighlightTexture("Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight")
     button:SetMovable(true)
     button:RegisterForClicks("LeftButtonUp")
     button:RegisterForDrag("LeftButton")

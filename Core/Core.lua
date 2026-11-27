@@ -86,9 +86,9 @@ function GU:ResetModule(key)
 end
 
 local function Initialize()
-    HealLaneModDB = type(HealLaneModDB) == "table" and HealLaneModDB
-        or type(GameUtilityDB) == "table" and GameUtilityDB or {}
-    GameUtilityDB = HealLaneModDB
+    if type(HealLaneModDB) ~= "table" then
+        HealLaneModDB = {}
+    end
     local db = HealLaneModDB
     db.modules = type(db.modules) == "table" and db.modules or {}
     db.minimap = type(db.minimap) == "table" and db.minimap or {}

@@ -263,6 +263,7 @@ end
 local function InitializeConfig()
     BuildPages()
     local frame = _G.HealLaneModConfigFrame
+    table.insert(UISpecialFrames, "HealLaneModConfigFrame")
     UI:StylePanel(frame, GU.colors)
 
     local title = UI:CreateLabel(frame, GU.colors, "HealLaneMod", "GameFontNormalLarge")
@@ -284,6 +285,10 @@ local function InitializeConfig()
     search:SetPoint("TOPRIGHT", -24, -62)
     search:SetAutoFocus(false)
     search:SetTextInsets(6, 6, 0, 0)
+    search:SetScript("OnEscapePressed", function(self)
+        self:ClearFocus()
+        frame:Hide()
+    end)
     search:SetScript("OnTextChanged", function(self)
         SearchCurrentTab(self:GetText() or "")
     end)
